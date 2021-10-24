@@ -1,0 +1,33 @@
+def nw(seq1,seq2):
+    len1 = len(seq1)+1
+    len2 = len(seq2)+1
+    a = [[0 for x in range(len(seq1) + 1)] for y in range(len(seq1) + 1)]
+    matchM = 1
+    misMatch = -1
+    gap = -2
+    for i in range(len1):
+        if i == 0:
+            a[i][0] = 0
+        else:
+            a[i][0] = a[i-1][0] + gap
+    for i in range(len2):
+        if i == 0:
+            a[0][i] = 0
+        else:
+            a[0][i] = a[0][i-1] + gap
+
+    for i in range(len1):
+        for j in range(len2):
+            if i == 0 or j == 0:
+                print("")
+            elif seq1[i-1] == seq2[j-1]:
+                mScore = a[i - 1][j - 1] + matchM
+                gScoreH = a[i - 1][j] + gap
+                gScoreV = a[i][j - 1] + gap
+                a[i][j] = max(mScore, gScoreH, gScoreV)
+            else:
+                mScore = a[i - 1][j - 1] + misMatch
+                gScoreH = a[i - 1][j] + gap
+                gScoreV = a[i][j - 1] + gap
+                a[i][j] = max(mScore, gScoreH, gScoreV)
+    print(a)
